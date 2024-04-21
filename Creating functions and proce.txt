@@ -1,0 +1,67 @@
+Before creating functions and procedures we net set below proprties Globely ion SQL server:
+
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+
+Create Function add two numbers:
+
+CREATE FUNCTION `fn_addnumbers`(num1 int,num2 int) RETURNS int
+BEGIN
+RETURN num1+num2;
+END
+
+
+call function
+
+SELECT fn_addnumbers(10,20) as result;
+
+
+
+
+
+
+Create get FullName function
+
+
+CREATE FUNCTION `fn_getFullName`(fname varchar(20), lname varchar(20)) RETURNS varchar(50) 
+BEGIN
+ DECLARE full_name VARCHAR(50);
+    SET full_name = CONCAT(fname, ' ', lname);
+    RETURN full_name;
+END
+
+call function
+
+SELECT fn_getFullName('Balaji','G') as fullName;
+
+
+
+Create Stored Proc
+
+CREATE  PROCEDURE `cal_proc`(in num1 int,in num2 int, out sum int, out sub int , out mul int, out divi int)
+BEGIN
+    set sum = num1+num2;
+    set sub = num1-num2;
+    set mul = num1*num2;
+    set divi = num1/num2;
+END
+
+
+call Proc
+--------------
+
+SET @num1 = 100;
+SET @num2 = 50;
+SET @sum_result = 0;
+SET @sub_result = 0;
+SET @mul_result = 0;
+SET @divi_result = 0;
+
+CALL cal_proc(@num1, @num2, @sum_result, @sub_result, @mul_result, @divi_result);
+
+SELECT @sum_result AS sum,
+       @sub_result AS sub,
+       @mul_result AS mul,
+       @divi_result AS divi;
+
+
